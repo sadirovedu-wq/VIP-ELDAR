@@ -1,1 +1,1292 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>ELDAR TRADE — VIP CHAT</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #ffffff;
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(0, 190, 255, 0.20),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 85% 90%,
+                    rgba(40, 80, 255, 0.18),
+                    transparent 35%
+                ),
+                #030a11;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           ФОН
+        ========================= */
+
+        .bg {
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            filter: blur(110px);
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .bg1 {
+            background: #00c8ff;
+            top: -220px;
+            left: -180px;
+        }
+
+        .bg2 {
+            background: #315cff;
+            right: -200px;
+            bottom: -220px;
+        }
+
+        /* =========================
+           КОНТЕЙНЕР
+        ========================= */
+
+        .container {
+            width: min(900px, 94%);
+            margin: auto;
+            padding: 30px 0;
+        }
+
+        /* =========================
+           КАРТОЧКИ
+        ========================= */
+
+        .card {
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(14, 35, 49, 0.94),
+                    rgba(3, 12, 20, 0.96)
+                );
+
+            border: 1px solid rgba(90, 210, 255, 0.16);
+
+            border-radius: 28px;
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.45),
+                inset 0 1px rgba(255, 255, 255, 0.05);
+
+            backdrop-filter: blur(20px);
+        }
+
+        /* =========================
+           ГЛАВНЫЙ ЭКРАН
+        ========================= */
+
+        .hero {
+            padding: 45px 35px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+
+            width: 650px;
+            height: 650px;
+
+            top: -420px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(0, 210, 255, 0.20),
+                    transparent 65%
+                );
+
+            animation: glow 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                opacity: 0.4;
+                transform: translateX(-50%) scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) scale(1.1);
+            }
+        }
+
+        /* =========================
+           КОРОНА
+        ========================= */
+
+        .crown {
+            position: relative;
+
+            font-size: 65px;
+
+            color: #ffc928;
+
+            line-height: 1;
+
+            margin-bottom: 10px;
+
+            text-shadow:
+                0 0 25px rgba(255, 201, 40, 0.35);
+
+            animation: crown 3s ease-in-out infinite;
+        }
+
+        @keyframes crown {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-7px);
+            }
+        }
+
+        /* =========================
+           ELDAR TRADE
+        ========================= */
+
+        .brand {
+            position: relative;
+
+            font-size: 18px;
+
+            font-weight: 900;
+
+            letter-spacing: 0.25em;
+        }
+
+        .brand span {
+            color: #00cfff;
+        }
+
+        /* =========================
+           VIP CHAT
+        ========================= */
+
+        .vip-title {
+            position: relative;
+
+            margin-top: 28px;
+
+            font-size: clamp(65px, 13vw, 125px);
+
+            line-height: 0.85;
+
+            font-weight: 950;
+
+            letter-spacing: -0.07em;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #ffffff 10%,
+                    #d8f9ff 45%,
+                    #00cfff 100%
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+        .subtitle {
+            position: relative;
+
+            margin-top: 25px;
+
+            font-size: 21px;
+
+            font-weight: 700;
+        }
+
+        .description {
+            position: relative;
+
+            max-width: 650px;
+
+            margin: 12px auto 30px;
+
+            color: #91aab7;
+
+            font-size: 16px;
+
+            line-height: 1.6;
+        }
+
+        /* =========================
+           ПРЕИМУЩЕСТВА
+        ========================= */
+
+        .features {
+            position: relative;
+
+            max-width: 750px;
+
+            margin: 0 auto 30px;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 12px;
+
+            text-align: left;
+        }
+
+        .feature {
+            padding: 18px;
+
+            display: flex;
+
+            gap: 14px;
+
+            border-radius: 18px;
+
+            background: rgba(255, 255, 255, 0.035);
+
+            border: 1px solid rgba(255, 255, 255, 0.07);
+
+            transition: 0.25s;
+        }
+
+        .feature:hover {
+            transform: translateY(-3px);
+
+            border-color:
+                rgba(0, 210, 255, 0.3);
+
+            background:
+                rgba(0, 200, 255, 0.05);
+        }
+
+        .feature-icon {
+            font-size: 28px;
+            min-width: 35px;
+        }
+
+        .feature h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .feature p {
+            color: #8198a4;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        /* =========================
+           КНОПКИ
+        ========================= */
+
+        .main-button {
+            position: relative;
+
+            width: 100%;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 17px 20px;
+
+            border: none;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #00bce8,
+                    #286cff
+                );
+
+            color: #ffffff;
+
+            font-size: 15px;
+
+            font-weight: 900;
+
+            letter-spacing: 0.04em;
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 15px 35px rgba(0, 145, 255, 0.25);
+
+            transition: 0.2s;
+        }
+
+        .main-button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08);
+        }
+
+        .main-button span {
+            font-size: 20px;
+        }
+
+        .risk {
+            position: relative;
+
+            margin-top: 15px;
+
+            color: #5d747f;
+
+            font-size: 10px;
+        }
+
+        /* =========================
+           ШАГИ
+        ========================= */
+
+        .step {
+            margin-top: 18px;
+
+            padding: 30px;
+
+            animation: appear 0.5s ease;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-number {
+            color: #00d5ff;
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+            letter-spacing: 0.2em;
+        }
+
+        .step h2 {
+            margin-top: 8px;
+
+            font-size: 29px;
+        }
+
+        .step-description {
+            margin-top: 10px;
+
+            color: #91a6b1;
+
+            line-height: 1.6;
+        }
+
+        /* =========================
+           ВТОРАЯ КНОПКА
+        ========================= */
+
+        .secondary-button {
+            width: 100%;
+
+            margin-top: 12px;
+
+            padding: 16px;
+
+            border-radius: 16px;
+
+            background: rgba(255, 255, 255, 0.05);
+
+            color: #ffffff;
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .secondary-button:not(:disabled):hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .secondary-button.locked {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .hint {
+            margin-top: 12px;
+
+            color: #718691;
+
+            font-size: 12px;
+
+            text-align: center;
+        }
+
+        /* =========================
+           INPUT
+        ========================= */
+
+        form {
+            margin-top: 20px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 17px;
+
+            border-radius: 15px;
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            background: #06121b;
+
+            color: #ffffff;
+
+            font-size: 16px;
+
+            outline: none;
+        }
+
+        input:focus {
+            border-color:
+                rgba(0, 210, 255, 0.5);
+
+            box-shadow:
+                0 0 0 3px rgba(0, 210, 255, 0.06);
+        }
+
+        input::placeholder {
+            color: #5d7480;
+        }
+
+        /* =========================
+           ПРОВЕРКА
+        ========================= */
+
+        .checking {
+            margin-top: 20px;
+
+            padding: 20px;
+
+            border-radius: 17px;
+
+            background:
+                rgba(255, 255, 255, 0.04);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+        .loader {
+            width: 30px;
+            height: 30px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            border: 3px solid
+                rgba(255, 255, 255, 0.1);
+
+            border-top-color: #00d5ff;
+
+            animation:
+                spin 0.9s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .checking strong {
+            display: block;
+
+            font-size: 14px;
+        }
+
+        .checking p {
+            margin-top: 4px;
+
+            color: #718893;
+
+            font-size: 12px;
+        }
+
+        /* =========================
+           РЕЗУЛЬТАТ
+        ========================= */
+
+        .result {
+            margin-top: 20px;
+
+            padding: 20px;
+
+            display: flex;
+
+            gap: 15px;
+
+            border-radius: 17px;
+
+            background:
+                rgba(255, 171, 60, 0.06);
+
+            border:
+                1px solid rgba(255, 171, 60, 0.25);
+
+            animation:
+                appear 0.4s ease;
+        }
+
+        .result-icon {
+            width: 36px;
+            height: 36px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255, 174, 60, 0.15);
+
+            color: #ffc267;
+
+            font-weight: 900;
+        }
+
+        .result strong {
+            font-size: 15px;
+        }
+
+        .result p {
+            margin-top: 6px;
+
+            color: #a18d76;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+        .admin-link {
+            display: inline-block;
+
+            margin-top: 12px;
+
+            color: #69dfff;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            text-decoration: none;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            padding: 22px 5px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            color: #526d79;
+
+            font-size: 12px;
+        }
+
+        footer a {
+            color: #66d9ff;
+
+            text-decoration: none;
+        }
+
+        /* =========================
+           HIDDEN
+        ========================= */
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            .container {
+                width: 94%;
+                padding-top: 15px;
+            }
+
+            .hero {
+                padding: 30px 18px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .vip-title {
+                font-size: 72px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+
+            .step {
+                padding: 22px 18px;
+            }
+
+            footer {
+                flex-direction: column;
+
+                gap: 10px;
+
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="bg bg1"></div>
+    <div class="bg bg2"></div>
+
+
+    <main class="container">
+
+
+        <!-- =========================
+             ГЛАВНЫЙ ЭКРАН
+        ========================= -->
+
+        <section class="card hero">
+
+            <div class="crown">
+                ♛
+            </div>
+
+            <div class="brand">
+                ELDAR <span>TRADE</span>
+            </div>
+
+            <div class="vip-title">
+                VIP CHAT
+            </div>
+
+            <div class="subtitle">
+                Закрытое пространство для трейдеров
+            </div>
+
+            <div class="description">
+                Торговые идеи, обучение, поддержка
+                и дополнительные инструменты
+                в одном месте.
+            </div>
+
+
+            <div class="features">
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🤖
+                    </div>
+
+                    <div>
+                        <h3>
+                            Торговый бот
+                        </h3>
+
+                        <p>
+                            Торговые сигналы и
+                            дополнительные инструменты.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        📊
+                    </div>
+
+                    <div>
+                        <h3>
+                            Копи-трейдинг
+                        </h3>
+
+                        <p>
+                            Возможность следить
+                            за торговыми сделками.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🎓
+                    </div>
+
+                    <div>
+                        <h3>
+                            Обучение
+                        </h3>
+
+                        <p>
+                            Разборы, торговые ситуации
+                            и обучение системе.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        💬
+                    </div>
+
+                    <div>
+                        <h3>
+                            Поддержка
+                        </h3>
+
+                        <p>
+                            Связь с администратором
+                            и помощь по процессу.
+                        </p>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                class="main-button"
+                id="joinButton"
+            >
+                ВСТУПИТЬ В VIP
+                <span>→</span>
+            </button>
+
+
+            <div class="risk">
+                Торговля связана с риском.
+                Результаты не гарантируются.
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             РЕГИСТРАЦИЯ
+        ========================= -->
+
+        <section
+            class="card step hidden"
+            id="registrationSection"
+        >
+
+            <div class="step-number">
+                ШАГ 01
+            </div>
+
+            <h2>
+                Пройдите регистрацию
+            </h2>
+
+            <p class="step-description">
+                Для продолжения перейдите по ссылке
+                и завершите регистрацию у брокера.
+            </p>
+
+
+            <a
+                class="main-button"
+                id="brokerLink"
+                href="https://u3.shortink.io/register?utm_campaign=855917&utm_source=affiliate&utm_medium=sr&a=dyEhsBghGdLyLR&al=1793102&ac=pocketoption&cid=977993&code=WELCOME50"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                ПРОЙТИ РЕГИСТРАЦИЮ
+                <span>↗</span>
+            </a>
+
+
+            <button
+                class="secondary-button locked"
+                id="registeredButton"
+                disabled
+            >
+                Я ЗАРЕГИСТРИРОВАЛСЯ
+            </button>
+
+
+            <div
+                class="hint"
+                id="registrationHint"
+            >
+                Сначала перейдите к регистрации.
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             ID
+        ========================= -->
+
+        <section
+            class="card step hidden"
+            id="idSection"
+        >
+
+            <div class="step-number">
+                ШАГ 02
+            </div>
+
+            <h2>
+                Введите ID аккаунта
+            </h2>
+
+            <p class="step-description">
+                Введите ID аккаунта, который вы
+                использовали при регистрации.
+            </p>
+
+
+            <form id="idForm">
+
+                <input
+                    type="text"
+                    id="accountId"
+                    placeholder="Введите ID аккаунта"
+                    autocomplete="off"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="main-button"
+                >
+                    ПРОВЕРИТЬ ID
+                    <span>→</span>
+                </button>
+
+            </form>
+
+
+
+            <!-- =========================
+                 ИМИТАЦИЯ ПРОВЕРКИ
+            ========================= -->
+
+            <div
+                class="checking hidden"
+                id="checking"
+            >
+
+                <div class="loader"></div>
+
+                <div>
+
+                    <strong>
+                        Проверяем ID...
+                    </strong>
+
+                    <p>
+                        Анализируем данные аккаунта.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 РЕЗУЛЬТАТ
+            ========================= -->
+
+            <div
+                class="result hidden"
+                id="result"
+            >
+
+                <div class="result-icon">
+                    !
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        ID не подтверждён
+                    </strong>
+
+                    <p>
+                        Не удалось подтвердить введённый ID.
+                        Для дальнейшей проверки обратитесь
+                        к администратору ELDAR TRADE.
+                    </p>
+
+
+                    <a
+                        class="admin-link"
+                        href="https://t.me/m/YjfSyiO8NzMy"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        НАПИСАТЬ АДМИНИСТРАТОРУ →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             FOOTER
+        ========================= -->
+
+        <footer>
+
+            <div>
+                © ELDAR TRADE
+            </div>
+
+            <a
+                href="https://t.me/m/YjfSyiO8NzMy"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Администратор — Eldar Trade
+            </a>
+
+        </footer>
+
+
+    </main>
+
+
+
+    <script>
+
+        // ==========================================
+        // ПОЛУЧАЕМ ЭЛЕМЕНТЫ
+        // ==========================================
+
+        const joinButton =
+            document.getElementById("joinButton");
+
+        const registrationSection =
+            document.getElementById(
+                "registrationSection"
+            );
+
+        const brokerLink =
+            document.getElementById(
+                "brokerLink"
+            );
+
+        const registeredButton =
+            document.getElementById(
+                "registeredButton"
+            );
+
+        const registrationHint =
+            document.getElementById(
+                "registrationHint"
+            );
+
+        const idSection =
+            document.getElementById(
+                "idSection"
+            );
+
+        const idForm =
+            document.getElementById(
+                "idForm"
+            );
+
+        const accountId =
+            document.getElementById(
+                "accountId"
+            );
+
+        const checking =
+            document.getElementById(
+                "checking"
+            );
+
+        const result =
+            document.getElementById(
+                "result"
+            );
+
+
+        // ==========================================
+        // КНОПКА «ВСТУПИТЬ В VIP»
+        // ==========================================
+
+        joinButton.addEventListener(
+            "click",
+            function () {
+
+                registrationSection
+                    .classList
+                    .remove("hidden");
+
+
+                setTimeout(
+                    function () {
+
+                        registrationSection
+                            .scrollIntoView({
+                                behavior: "smooth",
+                                block: "center"
+                            });
+
+                    },
+                    100
+                );
+
+            }
+        );
+
+
+        // ==========================================
+        // ПЕРЕХОД К БРОКЕРУ
+        // ==========================================
+
+        brokerLink.addEventListener(
+            "click",
+            function () {
+
+                /*
+                    Сайт не проверяет регистрацию
+                    через API.
+
+                    После перехода кнопка становится
+                    доступной для продолжения.
+                */
+
+                setTimeout(
+                    function () {
+
+                        registeredButton
+                            .disabled = false;
+
+
+                        registeredButton
+                            .classList
+                            .remove("locked");
+
+
+                        registrationHint.textContent =
+                            "Если вы завершили регистрацию, нажмите кнопку ниже.";
+
+                    },
+                    1000
+                );
+
+            }
+        );
+
+
+        // ==========================================
+        // «Я ЗАРЕГИСТРИРОВАЛСЯ»
+        // ==========================================
+
+        registeredButton.addEventListener(
+            "click",
+            function () {
+
+                idSection
+                    .classList
+                    .remove("hidden");
+
+
+                setTimeout(
+                    function () {
+
+                        idSection
+                            .scrollIntoView({
+                                behavior: "smooth",
+                                block: "center"
+                            });
+
+                    },
+                    100
+                );
+
+            }
+        );
+
+
+        // ==========================================
+        // ОТПРАВКА ID
+        // ==========================================
+
+        idForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+
+                const id =
+                    accountId
+                        .value
+                        .trim();
+
+
+                if (id === "") {
+
+                    accountId.focus();
+
+                    return;
+
+                }
+
+
+                // Прячем старый результат
+
+                result
+                    .classList
+                    .add("hidden");
+
+
+                // Показываем загрузку
+
+                checking
+                    .classList
+                    .remove("hidden");
+
+
+                /*
+                    ИМИТАЦИЯ ПРОВЕРКИ.
+
+                    Реального API здесь нет.
+
+                    Через 3 секунды всегда
+                    показывается результат
+                    о неподтверждённом ID.
+                */
+
+                setTimeout(
+                    function () {
+
+                        checking
+                            .classList
+                            .add("hidden");
+
+
+                        result
+                            .classList
+                            .remove("hidden");
+
+
+                        result
+                            .scrollIntoView({
+                                behavior: "smooth",
+                                block: "center"
+                            });
+
+                    },
+                    3000
+                );
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>
